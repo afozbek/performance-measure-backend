@@ -12,4 +12,6 @@ router.get("/", function (req, res, next) {
 
 router.post("/browser-metrics", metricController.postMetric);
 
+router.get("/browser-metrics", metricController.getMetric);
+
 module.exports = router;

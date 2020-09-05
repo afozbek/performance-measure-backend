@@ -22,3 +22,14 @@ exports.postMetric = (req, res, next) => {
       res.send({ message: "Error Happened" });
     });
 };
+
+exports.getMetric = (req, res, next) => {
+  Metric.find()
+    .then((metrics) => {
+      res.send(metrics);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.send({ message: "Metric getirmede hata oluştu" });
+    });
+};
