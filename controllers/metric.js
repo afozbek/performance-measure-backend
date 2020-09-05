@@ -4,16 +4,14 @@ const e = require("cors");
 exports.postMetric = async (req, res, next) => {
   const { timestamp, measureValue, measureName } = req.body;
 
+  const newDate = new Date(timestamp).toLocaleTimeString("tr-TR");
   try {
     const existingMetric = await Metric.findOne({ measureName });
 
     if (existingMetric) {
-      existingMetric.measureData.timestamps = [
-        ...existingMetric.measureData.timestamps,
-        timestamp,
-      ];
-      existingMetric.measureData.measureTimes = [
-        ...existingMetric.measureData.measureTimes,
+      existingMetric.timestamps = [...existingMetric.timestamps, newDate];
+      existingMetric.measureTimes = [
+        ...existingMetric.measureTimes,
         measureValue,
       ];
 
@@ -23,10 +21,8 @@ exports.postMetric = async (req, res, next) => {
     } else {
       const newMetric = new Metric({
         measureName,
-        measureData: {
-          timestamps: [timestamp],
-          measureTimes: [measureValue],
-        },
+        timestamps: [newDate],
+        measureTimes: [measureValue],
       });
 
       const result = await newMetric.save();
@@ -41,10 +37,7 @@ exports.postMetric = async (req, res, next) => {
 
 exports.getMetric = (req, res, next) => {
   Metric.find()
-    .sort({ _id: 1 })
-    .limit(100)
     .then((metrics) => {
-      console.log(metrics.length);
       res.status(200).send(metrics);
     })
     .catch((err) => {
