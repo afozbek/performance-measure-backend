@@ -19,14 +19,17 @@ exports.postMetric = (req, res, next) => {
     })
     .catch((err) => {
       console.log(err);
-      res.send({ message: "Error Happened" });
+      res.status(203).send({ message: "Error Happened" });
     });
 };
 
 exports.getMetric = (req, res, next) => {
   Metric.find()
+    .sort({ _id: 1 })
+    .limit(100)
     .then((metrics) => {
-      res.send(metrics);
+      console.log(metrics.length);
+      res.status(200).send(metrics);
     })
     .catch((err) => {
       console.log(err);
