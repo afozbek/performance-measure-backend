@@ -50,3 +50,8 @@
 ```
 
 ## Screenshots
+Server can handle 200 RPS
+
+- ![](assets/test-1.png)
+- ![](assets/test-2.png)
+- ![](assets/test-3.png)
