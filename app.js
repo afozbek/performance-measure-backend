@@ -11,9 +11,6 @@ var app = express();
 
 app.use(cors());
 
-// view engine setup
-app.set("views", path.join(__dirname, "views"));
-
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -26,7 +23,8 @@ app.use("/", indexRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
-  next(createError(404));
+  // next(createError(404));
+  res.status(404).send({ message: "404- Not Found" });
 });
 
 // error handler
@@ -37,7 +35,7 @@ app.use(function (err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render("error");
+  res.status(500).send({ message: err });
 });
 
 module.exports = app;
