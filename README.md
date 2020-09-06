@@ -5,7 +5,7 @@
   - with body { timestamp: 12314144141, measureValue: 1.0242424, measureName: 'load-time'}
 - `GET /browser-metrics`
 
-```json
+```js
 [
   {
   _id: "5f54c5b15822e613e0aa075f",
