@@ -33,7 +33,7 @@ exports.postMetric = async (req, res, next) => {
   }
 };
 
-exports.getMetric = (req, res, next) => {
+exports.getMetric2 = (req, res, next) => {
   const currentTimestamp = Date.now();
   const newDateTimeStamp = moment(currentTimestamp)
     .subtract(30, "minutes")
@@ -76,26 +76,31 @@ exports.getMetric = (req, res, next) => {
     });
 };
 
-exports.getMetric2 = (req, res, next) => {
+exports.getMetric = (req, res, next) => {
   const currentTimestamp = Date.now();
   const newDateTimeStamp = moment(currentTimestamp)
-    .subtract(1, "minutes")
+    .subtract(30, "minutes")
     .valueOf();
 
   console.log(newDateTimeStamp);
 
-  Metric.find({})
-    .populate({
-      path: "measureData",
-      match: { timestamp: { $gte: newDateTimeStamp } },
-      select: "measureName -_id",
-    })
-    .exec()
-    // .select("measureName")
+  Metric.aggregate([
+    {
+      $project: {
+        measureName: 1,
+        _id: 0,
+        measureData: {
+          $filter: {
+            input: "$measureData",
+            as: "item",
+            cond: { $gt: ["$$item.timestamp", newDateTimeStamp] },
+          },
+        },
+      },
+    },
+  ])
     .then((metrics) => {
       // metrics: [{},{},{},{}]
-      console.log(metrics[0].measureData.length);
-
       res.status(200).send(metrics);
     })
     .catch((err) => {
