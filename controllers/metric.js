@@ -13,9 +13,9 @@ exports.postMetric = async (req, res, next) => {
     if (existingMetric) {
       existingMetric.measureData.push(measureObj);
 
-      const result = await existingMetric.save();
+      await existingMetric.save();
 
-      res.status(200).send({ result, message: "Updated Metric" });
+      res.status(200).send({ message: "Updated Metric" });
     } else {
       const newMetric = new Metric({
         measureName,
@@ -23,9 +23,9 @@ exports.postMetric = async (req, res, next) => {
 
       newMetric.measureData.push(measureObj);
 
-      const result = await newMetric.save();
+      await newMetric.save();
 
-      res.status(203).send({ result, message: "New Metric Created" });
+      res.status(203).send({ message: "New Metric Created" });
     }
   } catch (err) {
     console.log(err);
