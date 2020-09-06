@@ -2,12 +2,12 @@ const mongoose = require("mongoose");
 
 const Schema = mongoose.Schema;
 
-const measureData = new Schema(
+const measureDataSchema = new Schema(
   {
-    timestamps: { type: Array },
-    measureTimes: { type: Array },
+    timestamp: Number,
+    measureValue: Number,
   },
-  { timestamps: { createdAt: "created_at" } }
+  { timestamps: true }
 );
 
 // const MeasureData = mongoose.model("MeasureData", measureData);
@@ -17,10 +17,9 @@ const metricSchema = new Schema(
     // measureData: [
     //   { timestamp: { type: Number }, measureTime: { type: Number } },
     // ],
-    timestamps: { type: Array },
-    measureTimes: { type: Array },
+    measureData: [measureDataSchema],
   },
-  { timestamps: { createdAt: "created_at" } }
+  { timestamps: true }
 );
 
 module.exports = mongoose.model("Metrics", metricSchema);
