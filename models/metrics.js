@@ -10,13 +10,9 @@ const measureDataSchema = new Schema(
   { timestamps: true }
 );
 
-// const MeasureData = mongoose.model("MeasureData", measureData);
 const metricSchema = new Schema(
   {
     measureName: { type: String, unique: true },
-    // measureData: [
-    //   { timestamp: { type: Number }, measureTime: { type: Number } },
-    // ],
     measureData: [measureDataSchema],
   },
   { timestamps: true }
