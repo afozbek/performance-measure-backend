@@ -4,7 +4,6 @@ const moment = require("moment");
 
 exports.getMetric = (req, res, next) => {
   const currentTimestamp = Date.now();
-  console.log(req.query);
 
   const newDateTimeStamp = moment(currentTimestamp)
     .subtract(req.query.lastMinutes || 30, "minutes")
